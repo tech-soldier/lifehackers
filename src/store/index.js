@@ -1,25 +1,38 @@
+import { createStore, combineReducers } from 'redux'
+import servicesReducer from 'reducers'
 
-import { createStore, combineReducers} from "redux";
 
-import servicesReducer from "reducers";
-
-//initializing store
-// reducers are functions that return state
-
-const addLoggerToDispatch = store => {
-    const dispatch = store.dispatch
-    return (action) => {
-        console.group(action.type)
-        console.log('%c prev state', 'color: gray', store.getState())
-        console.log('%c action', 'color: blue', action)
-        const returnValue = dispatch(action)
-        console.log('next state', store.getState())
-        console.groupEnd(action.type)
-        return returnValue
-    }
+const addLoggerToDispatch = store => nextDispatch => action => {
+    console.group(action.type)
+    console.log('%c prev state', 'color: gray', store.getState())
+    console.log('%c action', 'color: blue', action)
+    const returnValue = nextDispatch(action)
+    console.log('%c next state', 'color: green', store.getState())
+    console.groupEnd(action.type)
+    return returnValue
 }
 
+
+
+const addPromiseToDispatch = store => nextDispatch => action => {
+    if (typeof action.then === 'function') {
+        return action.then(nextDispatch)
+    }
+
+    return nextDispatch(action)
+}
+
+
+
+const applyMiddlewares = (store, middlewares) => {
+    middlewares.slice().reverse().forEach(middleware => {
+        store.dispatch = middleware(store)(store.dispatch)
+    })
+}
+
+
 const initStore = () => {
+    const middlewares = [addPromiseToDispatch]
     const serviceApp = combineReducers({
         service: servicesReducer
     })
@@ -27,11 +40,13 @@ const initStore = () => {
     const browserSupport = window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     const store = createStore(serviceApp, browserSupport)
 
-    store.dispatch = addLoggerToDispatch(store)
+    if (process.env.NODE_ENV !== 'production') {
+        middlewares.push(addLoggerToDispatch)
+    }
+
+    applyMiddlewares(store, middlewares)
 
     return store
 }
 
 export default initStore
-
-
