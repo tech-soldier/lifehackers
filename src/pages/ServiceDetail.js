@@ -3,10 +3,12 @@ import { useParams } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { fetchServiceById } from 'actions'
 
+import Spinner from 'components/Spinner'
+
 const ServiceDetail = props => {
 
     const { serviceId } = useParams()
-    const { dispatch } = props
+    const { dispatch, isFetching } = props
 
     useEffect(() => {
         dispatch(fetchServiceById(serviceId))
@@ -14,6 +16,9 @@ const ServiceDetail = props => {
 
 
     const { service } = props
+
+    if (serviceId !== service.id) { return <Spinner /> }
+    if (isFetching && !service.id) { return <Spinner /> }
 
     return (
         <section className="hero is-fullheight is-default is-bold">
@@ -46,6 +51,12 @@ const ServiceDetail = props => {
     )
 }
 
-const mapStateToProps = state => ({service: state.selectedService.item})
+const mapStateToProps = ({selectedService}) => (
+    {
+        service: selectedService.item,
+        isFetching: selectedService.isFetching
+    }
+)
 
 export default connect(mapStateToProps)(ServiceDetail)
+

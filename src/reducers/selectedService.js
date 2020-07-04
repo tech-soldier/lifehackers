@@ -10,8 +10,20 @@ import { combineReducers } from "redux"
                     return state
             }
         }
+
+        const isFetching = (state = false, action) => {
+            switch(action.type) {
+                case 'REQUEST_SERVICE':
+                    return true
+                case 'FETCH_SERVICE_SUCCESS':
+                    return false
+                default:
+                    return state
+            }
+        }
         return combineReducers({
-            item
+            item,
+            isFetching
         })
     }
 
