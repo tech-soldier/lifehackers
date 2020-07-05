@@ -2,7 +2,7 @@ import { combineReducers } from 'redux'
 import services from './services'
 import selectedService from './selectedService'
 import auth from './auth'
-import offers from "./offers";
+import offers from './offers'
 
 const serviceApp = combineReducers({
     services,
@@ -12,4 +12,5 @@ const serviceApp = combineReducers({
 })
 
 
+export const getMessages = state => state.auth.user.messages
 export default serviceApp
