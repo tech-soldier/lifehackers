@@ -99,7 +99,7 @@ const Navbar = props => {
                                 <Link
                                     to="/services/me"
                                     className="navbar-item">
-                                    Dropdown item
+                                    My Services
                                 </Link>
                             </div>
                         </div>
