@@ -1,11 +1,23 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
 
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom'
 
 const Navbar = props => {
 
     const { user, isAuth } = props.auth
+    const { logout, loadFresh } = props
+
+    useEffect(() => {
+        if (!loadFresh) { return }
+
+        const script = document.createElement('script')
+        script.src = `${process.env.PUBLIC_URL}/js/fresh.js`
+        script.async = true
+        document.body.appendChild(script)
+    }, [loadFresh])
+
+
     return (
         <nav
             id={props.id || ''}
@@ -17,7 +29,7 @@ const Navbar = props => {
                     <Link
                         to="/"
                         className="navbar-item">
-                        <div className="title">Servicario</div>
+                        <div className="title">LifeHackers</div>
                     </Link>
 
                     <a className="navbar-item is-hidden-desktop is-hidden-tablet">
@@ -71,7 +83,7 @@ const Navbar = props => {
                         <Link
                             to="/faq"
                             className="navbar-item is-secondary">
-                            Faq
+                            FAQ
                         </Link>
                         <div className="navbar-item has-dropdown is-hoverable">
                             <a className="navbar-link">
@@ -107,13 +119,13 @@ const Navbar = props => {
                         </React.Fragment>
                         }
                         { isAuth &&
-                        <Link
-                            to="/"
+                        <div
+                            onClick={logout}
                             className="navbar-item">
                 <span className="button signup-button is-danger rounded raised">
                     Logout
                 </span>
-                        </Link>
+                        </div>
                         }
                     </div>
                 </div>

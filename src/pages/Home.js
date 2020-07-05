@@ -13,7 +13,7 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        this.props.dispatch(fetchServices())
+        this.props.fetchServices()
     }
 
     renderServices = (services) => {
@@ -51,4 +51,4 @@ class Home extends React.Component {
 
 const mapStateToProps = state => ({services: state.services.all})
 
-export default connect(mapStateToProps)(Home)
+export default connect(mapStateToProps, {fetchServices})(Home)

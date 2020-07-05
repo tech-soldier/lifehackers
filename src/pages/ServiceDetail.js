@@ -8,11 +8,11 @@ import Spinner from 'components/Spinner'
 const ServiceDetail = props => {
 
     const { serviceId } = useParams()
-    const { dispatch, isFetching } = props
+    const { isFetching, fetchServiceById } = props
 
     useEffect(() => {
-        dispatch(fetchServiceById(serviceId))
-    }, [serviceId, dispatch])
+        fetchServiceById(serviceId)
+    }, [serviceId, fetchServiceById])
 
 
     const { service } = props
@@ -57,5 +57,5 @@ const mapStateToProps = ({selectedService}) => (
     }
 )
 
-export default connect(mapStateToProps)(ServiceDetail)
+export default connect(mapStateToProps, {fetchServiceById})(ServiceDetail)
 
