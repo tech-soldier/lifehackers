@@ -66,9 +66,31 @@ $section-grey: #fbfbfb;
 
  //auth end
 
-/* ==========================================================================
-General Keyframes animations
-========================================================================== */
+ //service create
+ .create-page {
+   margin-top: 70px;
+   margin-bottom: 70px;
+
+   .form-container {
+     max-width: 860px;
+     margin: 0 auto;
+   }
+
+   .field.is-grouped {
+     margin-top: 20px;
+   }
+ }
+ //end service create
+
+ // MODAL
+ .modal {
+   text-align: left !important;
+ }
+
+
+ /* ==========================================================================
+ General Keyframes animations
+ ========================================================================== */
 
 .animated {
   animation-duration: 0.5s;

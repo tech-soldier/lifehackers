@@ -4,11 +4,12 @@ import { connect } from 'react-redux'
 import { fetchServiceById } from 'actions'
 
 import Spinner from 'components/Spinner'
+import OfferModal from 'components/service/OfferModal'
 
 const ServiceDetail = props => {
 
     const { serviceId } = useParams()
-    const { isFetching, fetchServiceById } = props
+    const { fetchServiceById, isFetching } = props
 
     useEffect(() => {
         fetchServiceById(serviceId)
@@ -17,7 +18,7 @@ const ServiceDetail = props => {
 
     const { service } = props
 
-    if (isFetching || serviceId !== service.id ) { return <Spinner /> }
+    if (isFetching || serviceId !== service.id) { return <Spinner /> }
 
     return (
         <section className="hero is-fullheight is-default is-bold">
@@ -37,11 +38,9 @@ const ServiceDetail = props => {
                                 {service.description}
                             </h2>
                             <br />
-                            <p className="has-text-centered">
-                                <button className="button is-medium is-info is-outlined">
-                                    Learn more
-                                </button>
-                            </p>
+                            <div className="has-text-centered">
+                                <OfferModal service={service}/>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -58,4 +57,3 @@ const mapStateToProps = ({selectedService}) => (
 )
 
 export default connect(mapStateToProps, {fetchServiceById})(ServiceDetail)
-

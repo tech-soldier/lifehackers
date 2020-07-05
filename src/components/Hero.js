@@ -9,9 +9,9 @@ const Hero = () => {
                     <div className="columns is-vcentered">
                         <div className="column is-5 is-offset-1 landing-caption">
                             <h1 className="title is-1 is-bold is-spaced">
-                                Learn, Collaborate.
+                                Teach, Learn, Collaborate.
                             </h1>
-                            <h2 className="subtitle is-5 is-muted">Lorem ipsum sit dolor amet is a dummy text used by typography industry </h2>
+                            <h2 className="subtitle is-5 is-muted">Become a LifeHacker and influence someone's life by teaching things you are good at. </h2>
                             <p>
                                 <a className="button cta rounded primary-btn raised">
                                     Get Started
