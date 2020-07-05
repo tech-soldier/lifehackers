@@ -37,14 +37,5 @@ export const fetchServiceById = serviceId => (dispatch, getState) => {
         )
 }
 
-export const register = (registerFormData) => dispatch => {
-    return api
-        .register({...registerFormData})
-        .then(_ => {
-
-            return true
-    }, (errorMessage) => {
-        return Promise.reject(errorMessage)
-    })
-}
-
+export const register = registerFormData => api.register({...registerFormData})
+export const login = loginData => api.login({...loginData})

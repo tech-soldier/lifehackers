@@ -1,19 +1,28 @@
 /* eslint jsx-a11y/anchor-is-valid: 0 */
-import React from "react"
-import { connect } from 'react-redux'
-import RegisterForm from '../components/auth/RegisterForm'
+
+import React, { useState} from 'react'
+import RegisterForm from 'components/auth/RegisterForm'
 import { register } from 'actions'
+import { useToasts } from 'react-toast-notifications'
+
+import { Redirect } from 'react-router-dom'
+
+// import { withRouter } from 'react-router-dom'
 
 const Register = (props) => {
 
+    const [ redirect, setRedirect ] = useState(false)
+    const { addToast } = useToasts()
+
     const registerUser = (userData) => {
-        props.dispatch(register(userData))
-            .then((_) => {
-
-            }, (errorMessage) => {
-
-            })
+        // props.history.push('/')
+        register(userData)
+            .then(
+                _ => setRedirect(true),
+                errorMessage => addToast(errorMessage, { appearance: 'error', autoDismiss: true, autoDismissTimeout: 3000 }))
     }
+
+    if (redirect) { return <Redirect to="/" />}
 
     return (
         <div className="auth-page">
@@ -23,9 +32,9 @@ const Register = (props) => {
                     <p className="subtitle has-text-grey">Please Register to proceed.</p>
                     <div className="box">
                         <figure className="avatar">
-                            <img src="https://placehold.it/128x128"/>
+                            <img src="https://placehold.it/128x128" alt="Company Logo" />
                         </figure>
-                        <RegisterForm onRegister={registerUser}/>
+                        <RegisterForm onRegister={registerUser} />
                     </div>
                     <p className="has-text-grey">
                         <a>Sign In With Google</a>&nbsp;
@@ -38,4 +47,5 @@ const Register = (props) => {
     )
 }
 
-export default connect()(Register)
+// export default withRouter(Register)
+export default Register
